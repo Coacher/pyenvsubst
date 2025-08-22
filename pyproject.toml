@@ -1,0 +1,93 @@
+[build-system]
+requires = [
+    "setuptools >= 80.0.1",
+    "setuptools-scm >= 8.3.1",
+]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "pyenvsubst"
+description = "Substitutes the values of environment variables."
+license = "Apache-2.0"
+dynamic = ["version"]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+
+requires-python = ">= 3.13"
+
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "black==25.1.0",
+    "pre-commit==4.3.0",
+    "pylint==3.3.8",
+    "ruff==0.12.10",
+]
+
+[project.scripts]
+pyenvsubst = "pyenvsubst.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/Coacher/pyenvsubst"
+Repository = "https://github.com/Coacher/pyenvsubst.git"
+Changelog = "https://github.com/Coacher/pyenvsubst/releases"
+
+
+[tool.black]
+line-length = 88
+
+[tool.pylint.main]
+jobs = 1
+py-version = "3.13"
+
+[tool.pylint.format]
+max-line-length = 88
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "ANN", # flake8-annotations
+    "B", # flake8-bugbear
+    "A", # flake8-builtins
+    "SIM", # flake8-simplify
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "D", # pydocstyle
+    "F", # Pyflakes
+    "PLC", # Pylint conventions
+    "PLE", # Pylint errors
+    "PLW", # Pylint warnings
+    "UP", # pyupgrade
+    "RUF", # ruff
+]
+ignore = [
+    "D105", "D107", # allow undocumented magic methods, they have specs
+    "B9", # disable opinionated checks, disabled by default upstream
+    "SIM9", # disable experimental checks, disabled by default upstream
+]
+
+[tool.ruff.lint.flake8-annotations]
+mypy-init-return = true
+
+[tool.ruff.lint.isort]
+forced-separate = ["pyenvsubst"]
+known-local-folder = ["pyenvsubst"]
+lines-after-imports = 2
+lines-between-types = 1
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+
+[tool.setuptools_scm]
