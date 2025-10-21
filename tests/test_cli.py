@@ -10,7 +10,7 @@ from pyenvsubst.cli import CLI
 
 def test_cli_default_arguments() -> None:
     """Test default arguments."""
-    args = CLI.parse_args()
+    args = CLI.parse_args([])
 
     assert args.shell_format == ""
     assert args.variables is False
