@@ -1,0 +1,51 @@
+name: Run linters against new code
+
+on:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ "3.11" ]
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install the package and dev deps
+        run: |
+          python -m pip install --upgrade pip setuptools build wheel
+          pip install .[dev]
+
+      - name: Run black
+        id: black
+        continue-on-error: true
+        run: black --check .
+
+      - name: Run ruff
+        id: ruff
+        continue-on-error: true
+        run: ruff check --output-format=github
+
+      - name: Run pylint
+        id: pylint
+        continue-on-error: true
+        run: >
+          pylint --enable=all --enable-all-extensions
+          --disable=locally-disabled,suppressed-message
+          --recursive=y --score=n --output-format=github src
+
+      - name: Update job status
+        if: |
+          steps.black.outcome == 'failure' ||
+          steps.ruff.outcome == 'failure' ||
+          steps.pylint.outcome == 'failure'
+        run: exit 1
