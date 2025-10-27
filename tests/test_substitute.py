@@ -39,6 +39,7 @@ def test_substitute_empty_mapping() -> None:
 
     assert substitute(source, env) == target
 
+
 def test_substitute_empty_value() -> None:
     """Test substitution with empty value."""
     source = "FOO is $EMPTY"
@@ -46,6 +47,7 @@ def test_substitute_empty_value() -> None:
     target = "FOO is "
 
     assert substitute(source, env) == target
+
 
 def test_substitute_multiple_variables() -> None:
     """Test basic variable substitution."""
