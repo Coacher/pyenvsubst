@@ -27,10 +27,10 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = [
-    "black==25.9.0",
+    "black==25.11.0",
     "pre-commit==4.3.0",
     "pylint==4.0.3",
-    "ruff==0.14.1",
+    "ruff==0.14.6",
 ]
 test = ["pytest==8.4.2"]
 
